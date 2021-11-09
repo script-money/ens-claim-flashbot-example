@@ -6,14 +6,16 @@ import {
 import { BigNumber, providers, Wallet } from "ethers";
 import { Base } from "./engine/Base";
 import { checkSimulation, gasPriceToGwei, printTransactions } from "./utils";
-import { Approval721 } from "./engine/Approval721";
+import { ENS } from "./engine/ENS";
+import * as dotenv from 'dotenv'
 
+dotenv.config();
 require('log-timestamp');
 
 const BLOCKS_IN_FUTURE = 2;
 
 const GWEI = BigNumber.from(10).pow(9);
-const PRIORITY_GAS_PRICE = GWEI.mul(31)
+const PRIORITY_GAS_PRICE = GWEI.mul(Number(process.env.PRIORITY_GAS_FEE));
 
 const PRIVATE_KEY_EXECUTOR = process.env.PRIVATE_KEY_EXECUTOR || ""
 const PRIVATE_KEY_SPONSOR = process.env.PRIVATE_KEY_SPONSOR || ""
@@ -41,14 +43,16 @@ async function main() {
   const walletRelay = new Wallet(FLASHBOTS_RELAY_SIGNING_KEY)
 
   // ======= UNCOMMENT FOR GOERLI ==========
-  const provider = new providers.InfuraProvider(5, process.env.INFURA_API_KEY || '');
-  const flashbotsProvider = await FlashbotsBundleProvider.create(provider, walletRelay, 'https://relay-goerli.epheph.com/');
+  // const provider = new providers.InfuraProvider(5, process.env.INFURA_API_KEY || '');
+  // const flashbotsProvider = await FlashbotsBundleProvider.create(provider, walletRelay, 'https://relay-goerli.epheph.com/');
+  // const ensToken = '0xF962cC0c9A8862bd970c796b46e2A5027e225CeE' // testnet
   // ======= UNCOMMENT FOR GOERLI ==========
 
   // ======= UNCOMMENT FOR MAINNET ==========
-  // const ETHEREUM_RPC_URL = process.env.ETHEREUM_RPC_URL || "http://127.0.0.1:8545"
-  // const provider = new providers.StaticJsonRpcProvider(ETHEREUM_RPC_URL);
-  // const flashbotsProvider = await FlashbotsBundleProvider.create(provider, walletRelay);
+  const ETHEREUM_RPC_URL = process.env.ETHEREUM_RPC_URL || "http://127.0.0.1:8545"
+  const provider = new providers.StaticJsonRpcProvider(ETHEREUM_RPC_URL);
+  const flashbotsProvider = await FlashbotsBundleProvider.create(provider, walletRelay);
+  const ensToken = '0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72' // mainnet
   // ======= UNCOMMENT FOR MAINNET ==========
 
   const walletExecutor = new Wallet(PRIVATE_KEY_EXECUTOR);
@@ -57,26 +61,32 @@ async function main() {
   const block = await provider.getBlock("latest")
 
   // ======= UNCOMMENT FOR ERC20 TRANSFER ==========
-  // const tokenAddress = "0x4da27a545c0c5B758a6BA100e3a049001de870f5";
+  // const tokenAddress = "0x64ef393b6846114bad71e2cb2ccc3e10736b5716";
   // const engine: Base = new TransferERC20(provider, walletExecutor.address, RECIPIENT, tokenAddress);
   // ======= UNCOMMENT FOR ERC20 TRANSFER ==========
 
   // ======= UNCOMMENT FOR 721 Approval ==========
-  const HASHMASKS_ADDRESS = "0xC2C747E0F7004F9E8817Db2ca4997657a7746928";
-  const engine: Base = new Approval721(RECIPIENT, [HASHMASKS_ADDRESS]);
+  // const HASHMASKS_ADDRESS = "0xC2C747E0F7004F9E8817Db2ca4997657a7746928";
+  // const engine: Base = new Approval721(RECIPIENT, [HASHMASKS_ADDRESS]);
   // ======= UNCOMMENT FOR 721 Approval ==========
 
-  const sponsoredTransactions = await engine.getSponsoredTransactions();
+  // ======= UNCOMMENT FOR ENS CLAIM AND TRANSFER ==========
+  const engine: Base = new ENS(provider, walletExecutor.address, RECIPIENT, ensToken);
+  // ======= UNCOMMENT FOR ENS CLAIM AND TRANSFER ==========
 
-  const gasEstimates = await Promise.all(sponsoredTransactions.map(tx =>
-    provider.estimateGas({
-      ...tx,
-      from: tx.from === undefined ? walletExecutor.address : tx.from
-    }))
-  )
+  const sponsoredTransactions = await engine.getSponsoredTransactions();
+  if (sponsoredTransactions.length === 0) {
+    console.log("No sponsored transactions found")
+    process.exit(0)
+  }
+
+  const gasEstimates = sponsoredTransactions.map(tx => BigNumber.from(tx.gasLimit!))
+
   const gasEstimateTotal = gasEstimates.reduce((acc, cur) => acc.add(cur), BigNumber.from(0))
 
   const gasPrice = PRIORITY_GAS_PRICE.add(block.baseFeePerGas || 0);
+  console.log('gasPrice', gasPrice);
+
   const bundleTransactions: Array<FlashbotsBundleTransaction | FlashbotsBundleRawTransaction> = [
     {
       transaction: {
@@ -131,4 +141,19 @@ async function main() {
   })
 }
 
-main()
+async function run() {
+  let result = false
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+  while (!result) {
+    try {
+      await main().then(() => result = true).catch(async (e) => {
+        console.warn(e);
+        await delay(5000)
+      });
+    } catch (e) {
+      console.log('failed:', e)
+    }
+  }
+}
+
+run()
