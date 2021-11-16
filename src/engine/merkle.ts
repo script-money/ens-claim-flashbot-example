@@ -22,6 +22,13 @@ interface IShards {
   }
 }
 
+interface ITree {
+  index: number,
+  amount: string,
+  proof: string[],
+  flags: { isSOCKS: boolean, isLP: boolean, isUser: boolean }
+}
+
 function hashLeaf([address, entry]: [string, IEntry]): string {
   return ethers.utils.solidityKeccak256(['address', 'uint256'], [address, entry.balance]);
 }
@@ -64,6 +71,11 @@ class ShardedMerkleTree {
     return new ShardedMerkleTree((shard: string) => {
       return JSON.parse(fs.readFileSync(path.join(directory, `${shard}.json`), { encoding: 'utf-8' }));
     }, shardNybbles, root, ethers.BigNumber.from(total));
+  }
+
+  static getProofParaswap(directory: string, address: string): [string, ITree] {
+    const { merkleRoot, tokenTotal, claims } = JSON.parse(fs.readFileSync(path.join(directory, 'root.json'), { encoding: 'utf-8' }));
+    return [merkleRoot, claims[address]]
   }
 }
 
