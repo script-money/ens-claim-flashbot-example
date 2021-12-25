@@ -865,8 +865,8 @@ export class PSP extends Base {
     }
     const { index, amount, proof } = merkle[1]
     return [
-      { ...await this._pspClaimContract.populateTransaction.claim(index, this._sender, amount, proof), gasLimit: 80788 },
-      { ...await this._pspERC20Contract.populateTransaction.transfer(this._recipient, amount), gasLimit: 136051 }
+      { ...await this._pspClaimContract.populateTransaction.claim(index, this._sender, amount, proof), gasLimit: 90000 },
+      { ...await this._pspERC20Contract.populateTransaction.transfer(this._recipient, amount), gasLimit: 100000 }
     ]
   }
 }
