@@ -9,6 +9,7 @@ import { checkSimulation, gasPriceToGwei, printTransactions } from "./utils";
 import { ENS } from "./engine/ENS";
 import * as dotenv from 'dotenv'
 import { PSP } from "./engine/PSP";
+import { SOS } from "./engine/SOS";
 
 dotenv.config();
 require('log-timestamp');
@@ -53,14 +54,10 @@ async function main() {
   const ETHEREUM_RPC_URL = process.env.ETHEREUM_RPC_URL || "http://127.0.0.1:8545"
   const provider = new providers.StaticJsonRpcProvider(ETHEREUM_RPC_URL);
   const flashbotsProvider = await FlashbotsBundleProvider.create(provider, walletRelay);
-  const ensToken = '0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72' // mainnet
-  const pspClaim = '0x090E53c44E8a9b6B1bcA800e881455b921AEC420' // mainnet
-  const pspToken = '0xcAfE001067cDEF266AfB7Eb5A286dCFD277f3dE5' // mainnet
   // ======= UNCOMMENT FOR MAINNET ==========
 
   const walletExecutor = new Wallet(PRIVATE_KEY_EXECUTOR);
   const walletSponsor = new Wallet(PRIVATE_KEY_SPONSOR);
-
   const block = await provider.getBlock("latest")
 
   // ======= UNCOMMENT FOR ERC20 TRANSFER ==========
@@ -74,13 +71,20 @@ async function main() {
   // ======= UNCOMMENT FOR 721 Approval ==========
 
   // ======= UNCOMMENT FOR ENS CLAIM AND TRANSFER ==========
+  // const ensToken = '0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72' // mainnet
   // const engine: Base = new ENS(provider, walletExecutor.address, RECIPIENT, ensToken);
   // ======= UNCOMMENT FOR ENS CLAIM AND TRANSFER ==========
 
   // ======= UNCOMMENT FOR PSP CLAIM AND TRANSFER ==========
-  // const engine: Base = new ENS(provider, walletExecutor.address, RECIPIENT, ensToken);
-  const engine: Base = new PSP(provider, walletExecutor.address, RECIPIENT, pspClaim, pspToken);
+  // const pspClaim = '0x090E53c44E8a9b6B1bcA800e881455b921AEC420' // mainnet
+  // const pspToken = '0xcAfE001067cDEF266AfB7Eb5A286dCFD277f3dE5' // mainnet
+  // const engine: Base = new PSP(provider, walletExecutor.address, RECIPIENT, pspClaim, pspToken);
   // ======= UNCOMMENT FOR PSP CLAIM AND TRANSFER ==========
+
+  // ======= UNCOMMENT FOR SOS CLAIM AND TRANSFER ==========
+  const sosTokenAddress = '0x3b484b82567a09e2588a13d54d032153f0c0aee0'
+  const engine: Base = new SOS(provider, walletExecutor.address, RECIPIENT, sosTokenAddress);
+  // ======= UNCOMMENT FOR SOS CLAIM AND TRANSFER ==========
 
   const sponsoredTransactions = await engine.getSponsoredTransactions();
   if (sponsoredTransactions.length === 0) {

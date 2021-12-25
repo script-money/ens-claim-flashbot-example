@@ -1,13 +1,15 @@
-# searcher-sponsored-tx
+# save airdrop in hacked wallet example
 
-[source repository](https://github.com/flashbots/searcher-sponsored-tx)
+use [flashbot](https://github.com/flashbots/searcher-sponsored-tx), only support ethereum mainnet and goerli
 
-# Usage
+support **ENS** **PSP** **SOS**
+
+## Usage
 
 change .env.example to .env, then modify environment variables
 
 yarn
 
-modify code in src/index.ts
+modify code in src/index.ts (if claim SOS, also need add parameters in src/engine/SOS.ts)
 
 use `yarn start` run code
