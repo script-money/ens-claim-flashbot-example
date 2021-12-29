@@ -2,7 +2,7 @@
 
 use [flashbot](https://github.com/flashbots/searcher-sponsored-tx), only support ethereum mainnet and goerli
 
-support **ENS** **PSP** **SOS**
+support **ENS** **PSP** **SOS** **GAS**
 
 ## Usage
 

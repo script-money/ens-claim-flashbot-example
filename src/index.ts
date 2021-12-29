@@ -10,6 +10,7 @@ import { ENS } from "./engine/ENS";
 import * as dotenv from 'dotenv'
 import { PSP } from "./engine/PSP";
 import { SOS } from "./engine/SOS";
+import { GAS } from "./engine/GAS";
 
 dotenv.config();
 require('log-timestamp');
@@ -82,8 +83,13 @@ async function main() {
   // ======= UNCOMMENT FOR PSP CLAIM AND TRANSFER ==========
 
   // ======= UNCOMMENT FOR SOS CLAIM AND TRANSFER ==========
-  const sosTokenAddress = '0x3b484b82567a09e2588a13d54d032153f0c0aee0'
-  const engine: Base = new SOS(provider, walletExecutor.address, RECIPIENT, sosTokenAddress);
+  // const sosTokenAddress = '0x3b484b82567a09e2588a13d54d032153f0c0aee0'
+  // const engine: Base = new SOS(provider, walletExecutor.address, RECIPIENT, sosTokenAddress);
+  // ======= UNCOMMENT FOR SOS CLAIM AND TRANSFER ==========
+
+  // ======= UNCOMMENT FOR GASDAO CLAIM AND TRANSFER ==========
+  const gasTokenAddress = '0x6bba316c48b49bd1eac44573c5c871ff02958469'
+  const engine: Base = new GAS(provider, walletExecutor.address, RECIPIENT, gasTokenAddress);
   // ======= UNCOMMENT FOR SOS CLAIM AND TRANSFER ==========
 
   const sponsoredTransactions = await engine.getSponsoredTransactions();
