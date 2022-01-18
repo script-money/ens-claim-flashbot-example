@@ -72,7 +72,7 @@ export class TransferERC721 extends Base {
     async getSponsoredTransactions(): Promise<Array<TransactionRequest>> {
         await Promise.all(this._tokenIds.map(async (tokenId) => {
             const owner = await this._tokenContract.functions.ownerOf(tokenId);
-            if (owner.owner !== this._sender) throw new Error("Kitty: " + tokenId + " is not owned by " + this._sender)
+            if (owner.owner !== this._sender) throw new Error("NFT: " + tokenId + " is not owned by " + this._sender)
         }))
         return Promise.all(this._tokenIds.map(async (tokenId) => {
             return {
