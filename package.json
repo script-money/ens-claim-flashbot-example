@@ -1,0 +1,33 @@
+{
+  "name": "@flashbots/searcher-sponsored-tx",
+  "version": "0.0.1",
+  "description": "",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "start": "ts-node --project tsconfig.json src/index.ts",
+    "build": "npx tsc",
+    "prepare": "npm run build",
+    "lint": "npx eslint src"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/lodash": "^4.14.165",
+    "@types/node": "^14.14.10",
+    "@typescript-eslint/eslint-plugin": "^4.9.1",
+    "@typescript-eslint/parser": "^4.9.1",
+    "eslint": "^7.15.0"
+  },
+  "dependencies": {
+    "@flashbots/ethers-provider-bundle": "^0.4.0",
+    "dotenv": "^10.0.0",
+    "ethers": "^5.4.2",
+    "keccak256": "^1.0.3",
+    "lodash": "^4.17.20",
+    "log-timestamp": "^0.3.0",
+    "merkletreejs": "^0.2.24",
+    "ts-node": "^9.1.0",
+    "typescript": "^4.1.2"
+  }
+}
