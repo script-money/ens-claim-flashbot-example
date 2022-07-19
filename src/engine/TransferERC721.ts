@@ -52,9 +52,9 @@ export class TransferERC721 extends Base {
   private _sender: string;
   private _recipient: string;
   private _tokenContract: Contract;
-  private _tokenIds: number[];
+  private _tokenIds: number[] | string[];
 
-  constructor(provider: providers.JsonRpcProvider, sender: string, recipient: string, _tokenAddress: string, tokenIds: number[]) {
+  constructor(provider: providers.JsonRpcProvider, sender: string, recipient: string, _tokenAddress: string, tokenIds: number[] | string[]) {
     super()
     if (!isAddress(sender)) throw new Error("Bad Address")
     if (!isAddress(recipient)) throw new Error("Bad Address")
