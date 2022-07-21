@@ -41,10 +41,10 @@ export class TransferERC1155 extends Base {
   private _sender: string;
   private _recipient: string;
   private _tokenContract: Contract;
-  private _tokenIds: number[];
+  private _tokenIds: number[] | string[];
   private _amounts: number[];
 
-  constructor(provider: providers.JsonRpcProvider, sender: string, recipient: string, _tokenAddress: string, tokenIds: number[], amounts: number[]) {
+  constructor(provider: providers.JsonRpcProvider, sender: string, recipient: string, _tokenAddress: string, tokenIds: number[] | string[], amounts: number[]) {
     super()
     if (!isAddress(sender)) throw new Error("Bad Address")
     if (!isAddress(recipient)) throw new Error("Bad Address")
