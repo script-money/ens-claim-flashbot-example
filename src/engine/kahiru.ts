@@ -1,10 +1,10 @@
 import { TransactionRequest } from "@ethersproject/abstract-provider";
-import { Base } from "./Base";
-import { isAddress } from "ethers/lib/utils";
 import { Contract, providers } from "ethers";
+import { isAddress } from "ethers/lib/utils";
+import { Base } from "./Base";
 
-const KahiruStakingContract = '0x6DffB6415c96EC393Bf018fB824934d7b5B637a0' // Unstake
-const KahiruNFTContract = '0x0326b0688d9869a19388312Df6805d1D72AaB7bC' // NFT to transfer
+const KahiruStakingContract = '0x6DffB6415c96EC393Bf018fB824934d7b5B637a0' // stakeNFT
+const KahiruNFTContract = '0x0326b0688d9869a19388312Df6805d1D72AaB7bC' // NFT
 
 const STAKING_ABI = [{ "inputs": [{ "internalType": "uint256[]", "name": "tokenIds", "type": "uint256[]" }], "name": "unstake", "outputs": [], "stateMutability": "nonpayable", "type": "function" }]
 const NFT_ABI = [
@@ -18,7 +18,7 @@ export class Kahiru extends Base {
   private _KahiruNFTContract: Contract;
 
   constructor(provider: providers.JsonRpcProvider, sender: string, recipient: string) {
-    super()
+    super();
     if (!isAddress(recipient)) throw new Error("Bad recipient Address")
     if (!isAddress(sender)) throw new Error("Bad sender Address")
     this._sender = sender;
@@ -28,7 +28,7 @@ export class Kahiru extends Base {
   }
 
   async description(): Promise<string> {
-    return `unstake Kahiru from ${this._sender}, and transfer to ${this._recipient}`
+    return `From ${this._sender}, unstake from ${KahiruStakingContract}, get Kahiru ${KahiruNFTContract}, and transfer to ${this._recipient}`
   }
 
   async getSponsoredTransactions(): Promise<Array<TransactionRequest>> {
