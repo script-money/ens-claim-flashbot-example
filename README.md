@@ -15,3 +15,7 @@ support **ERC20** **ERC721** **ERC1155**
 modify code in src/index.ts (if claim SOS/GAS/WTF, also need add parameters in file at src/engine)
 
 use `yarn start` run code
+
+## How to build your bundle
+
+[check this document](./guide/how_to_build_your_bundle.md)

@@ -6,17 +6,18 @@ import {
 import { BigNumber, providers, Wallet } from "ethers";
 import { Base } from "./engine/Base";
 import { checkSimulation, gasPriceToGwei, printTransactions } from "./utils";
-import { ENS } from "./engine/ENS";
+// import { ENS } from "./engine/ENS";
 import * as dotenv from 'dotenv'
-import { PSP } from "./engine/PSP";
-import { SOS } from "./engine/SOS";
-import { GAS } from "./engine/GAS";
-import { WTF } from "./engine/WTF";
-import { FORT } from "./engine/FORT";
-import { TransferERC20 } from "./engine/TransferERC20";
-import { TransferERC721 } from "./engine/TransferERC721";
-import { TransferERC1155 } from "./engine/TransferERC1155";
-import { RSS3 } from "./engine/RSS3";
+// import { PSP } from "./engine/PSP";
+// import { SOS } from "./engine/SOS";
+// import { GAS } from "./engine/GAS";
+// import { WTF } from "./engine/WTF";
+// import { FORT } from "./engine/FORT";
+// import { TransferERC20 } from "./engine/TransferERC20";
+// import { TransferERC721 } from "./engine/TransferERC721";
+// import { TransferERC1155 } from "./engine/TransferERC1155";
+// import { RSS3 } from "./engine/RSS3";
+import { Kahiru } from "./engine/kahiru";
 
 dotenv.config();
 require('log-timestamp');
@@ -78,15 +79,15 @@ async function main() {
   // ======= UNCOMMENT FOR 721 Approval ==========
 
   // ======= UNCOMMENT FOR 721 transfer ==========
-  // const NFT_ADDRESS = "0x81ca1f6608747285c9c001ba4f5ff6ff2b5f36f8";
-  // const TOKENIDS = [0, 500]
+  // const NFT_ADDRESS = "0xa5fb4e920c30a4a8158521783e527974ec6aee85";
+  // const TOKENIDS = ["300"]
   // const engine: Base = new TransferERC721(provider, walletExecutor.address, RECIPIENT, NFT_ADDRESS, TOKENIDS);
   // ======= UNCOMMENT FOR 721 transfer ==========
 
   // ======= UNCOMMENT FOR ENS domain transfer ==========
-  const NFT_ADDRESS = "0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85";
-  const TOKENIDS = ["68873328475343095541119240186020643614817801304530191181107579992863257548386"]
-  const engine: Base = new TransferERC721(provider, walletExecutor.address, RECIPIENT, NFT_ADDRESS, TOKENIDS);
+  //   const NFT_ADDRESS = "0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85";
+  //   const TOKENIDS = ["68873328475343095541119240186020643614817801304530191181107579992863257548386"]
+  //   const engine: Base = new TransferERC721(provider, walletExecutor.address, RECIPIENT, NFT_ADDRESS, TOKENIDS);
   // ======= UNCOMMENT FOR ENS domain transfer ==========
 
   // ======= UNCOMMENT FOR 1155 transfer ==========
@@ -134,6 +135,10 @@ async function main() {
   // const FORTTokenAddress = '0x41545f8b9472D758bB669ed8EaEEEcD7a9C4Ec29'
   // const engine: Base = new FORT(provider, walletExecutor.address, RECIPIENT, FORTClaimAddress, FORTTokenAddress);
   // ======= UNCOMMENT FOR FORT CLAIM AND TRANSFER ==========
+
+  // ======= UNCOMMENT FOR Kahiru ==========
+  const engine: Base = new Kahiru(provider, walletExecutor.address, RECIPIENT);
+  // ======= UNCOMMENT FOR FORT CLAIM AND TRANSFER ==========‘
 
   const sponsoredTransactions = await engine.getSponsoredTransactions();
   if (sponsoredTransactions.length === 0) {
