@@ -379,9 +379,9 @@
     "@ethersproject/strings" "^5.5.0"
 
 "@flashbots/ethers-provider-bundle@^0.4.0":
-  version "0.4.2"
-  resolved "https://registry.npmmirror.com/@flashbots/ethers-provider-bundle/download/@flashbots/ethers-provider-bundle-0.4.2.tgz#9b3734982eaad66a03641d0a3b0ea46981c716f8"
-  integrity sha1-mzc0mC6q1moDZB0KOw6kaYHHFvg=
+  version "0.4.4"
+  resolved "https://registry.npmmirror.com/@flashbots/ethers-provider-bundle/-/ethers-provider-bundle-0.4.4.tgz#5f95ea17304c7a4bd407a812da70d2e8e6df4dd8"
+  integrity sha512-QRpJIzwLTrAX5Px+CqfGFLz1c2WqII5phNHSTKwx9U2JuxouMNWnl0o0fqOsgR8+7iXfuEDESAdOErBzxMPviw==
   dependencies:
     ts-node "^9.1.0"
     typescript "^4.1.2"

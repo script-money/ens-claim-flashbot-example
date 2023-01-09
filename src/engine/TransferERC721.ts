@@ -30,7 +30,7 @@ export class TransferERC721 extends Base {
   async getSponsoredTransactions(): Promise<Array<TransactionRequest>> {
     return Promise.all(this._tokenIds.map(async (tokenId) => {
       return {
-        ...await this._tokenContract.populateTransaction.safeTransferFrom(this._sender, this._recipient, tokenId), gasLimit: 85000,
+        ...await this._tokenContract.populateTransaction.safeTransferFrom(this._sender, this._recipient, tokenId), chainId: 1, gasLimit: 85000,
       }
     }))
   }

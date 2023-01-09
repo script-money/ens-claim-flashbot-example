@@ -65,8 +65,8 @@ export class SOS extends Base {
     const s = ""
 
     return [
-      { ...await this._sosClaimContract.populateTransaction.claim(v, r, s), gasLimit: 60000 },
-      { ...await this._sosERC20Contract.populateTransaction.transfer(this._recipient, parseUnits(total_share, 'ether')), gasLimit: 100000 }
+      { ...await this._sosClaimContract.populateTransaction.claim(v, r, s), chainId: 1, gasLimit: 60000 },
+      { ...await this._sosERC20Contract.populateTransaction.transfer(this._recipient, parseUnits(total_share, 'ether')), chainId: 1, gasLimit: 100000 }
     ]
   }
 }

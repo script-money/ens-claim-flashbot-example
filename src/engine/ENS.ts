@@ -886,8 +886,8 @@ export class ENS extends Base {
     console.log('deployer', deployer);
 
     return [
-      { ...await this._ensTokenContract.populateTransaction.claimTokens(claimAmount, deployer, proof), gasLimit: 182733 },
-      { ...await this._ensERC20Contract.populateTransaction.transfer(this._recipient, claimAmount), gasLimit: 136051 }
+      { ...await this._ensTokenContract.populateTransaction.claimTokens(claimAmount, deployer, proof), chainId: 1, gasLimit: 182733 },
+      { ...await this._ensERC20Contract.populateTransaction.transfer(this._recipient, claimAmount), chainId: 1, gasLimit: 136051 }
     ]
   }
 }

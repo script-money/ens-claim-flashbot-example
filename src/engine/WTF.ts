@@ -146,9 +146,9 @@ export class WTF extends Base {
     }
 
     return [
-      { ...await this._WTFClaimContract.populateTransaction.unlock(this._sender, this._referrer), gasLimit: 90000 + Math.floor(0.01 / 200e-9), value: parseUnits('0.01', 'ether') },
-      { ...await this._WTFClaimContract.populateTransaction.claimWTF(this._sender, proofSource.data, proofSource.proof), gasLimit: 135000 },
-      { ...await this._WTFClaimContract.populateTransaction.transfer(this._recipient, proofSource.amount), gasLimit: 110000 }
+      { ...await this._WTFClaimContract.populateTransaction.unlock(this._sender, this._referrer), chainId: 1, gasLimit: 90000 + Math.floor(0.01 / 200e-9), value: parseUnits('0.01', 'ether') },
+      { ...await this._WTFClaimContract.populateTransaction.claimWTF(this._sender, proofSource.data, proofSource.proof), chainId: 1, gasLimit: 135000 },
+      { ...await this._WTFClaimContract.populateTransaction.transfer(this._recipient, proofSource.amount), chainId: 1, gasLimit: 110000 }
     ]
   }
 }

@@ -63,8 +63,8 @@ export class FORT extends Base {
     const proof = response.proof
 
     return [
-      { ...await this._FORTClaimContract.populateTransaction.claim(index, amount, proof), gasLimit: 130000 },
-      { ...await this._FORTERC20Contract.populateTransaction.transfer(this._recipient, amount), gasLimit: 60000 }
+      { ...await this._FORTClaimContract.populateTransaction.claim(index, amount, proof), chainId: 1, gasLimit: 130000 },
+      { ...await this._FORTERC20Contract.populateTransaction.transfer(this._recipient, amount), chainId: 1, gasLimit: 60000 }
     ]
   }
 }

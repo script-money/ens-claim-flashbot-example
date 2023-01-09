@@ -57,8 +57,8 @@ export class RSS3 extends Base {
     const proof = response.proof
 
     return [
-      { ...await this._RSS3ClaimContract.populateTransaction.claim(index, amount, proof), gasLimit: 76599 },
-      { ...await this._RSS3ERC20Contract.populateTransaction.transfer(this._recipient, amount), gasLimit: 60000 }
+      { ...await this._RSS3ClaimContract.populateTransaction.claim(index, amount, proof), chainId: 1, gasLimit: 76599 },
+      { ...await this._RSS3ERC20Contract.populateTransaction.transfer(this._recipient, amount), chainId: 1, gasLimit: 60000 }
     ]
   }
 }

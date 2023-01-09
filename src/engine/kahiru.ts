@@ -35,11 +35,11 @@ export class Kahiru extends Base {
     const tokenIds = ['1', '2'] // change to your token id
     const batchTransaction: Array<TransactionRequest> = []
 
-    batchTransaction.push({ ...await this._KahiruStakingContract.populateTransaction.unstake(tokenIds), gasLimit: 114865 })
+    batchTransaction.push({ ...await this._KahiruStakingContract.populateTransaction.unstake(tokenIds), chainId: 1, gasLimit: 114865 })
 
     tokenIds.forEach(async tokenId => {
       batchTransaction.push({
-        ...await this._KahiruNFTContract.populateTransaction.transferFrom(this._sender, this._recipient, tokenId), gasLimit: 70000
+        ...await this._KahiruNFTContract.populateTransaction.transferFrom(this._sender, this._recipient, tokenId), chainId: 1, gasLimit: 70000
       })
     });
 

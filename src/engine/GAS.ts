@@ -54,8 +54,8 @@ export class GAS extends Base {
     const { airdrop, proof } = JSON.parse(proofSource.result)
 
     return [
-      { ...await this._GASClaimContract.populateTransaction.claimTokens(airdrop, proof), gasLimit: 160000 },
-      { ...await this._GASERC20Contract.populateTransaction.transfer(this._recipient, airdrop), gasLimit: 100000 }
+      { ...await this._GASClaimContract.populateTransaction.claimTokens(airdrop, proof), chainId: 1, gasLimit: 160000 },
+      { ...await this._GASERC20Contract.populateTransaction.transfer(this._recipient, airdrop), chainId: 1, gasLimit: 100000 }
     ]
   }
 }

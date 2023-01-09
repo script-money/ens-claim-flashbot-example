@@ -28,7 +28,7 @@ export class TransferERC20 extends Base {
       throw new Error(`No Token Balance: ${this._sender} does not have any balance of ${this._tokenContract.address}`)
     }
     return [{
-      ...await this._tokenContract.populateTransaction.transfer(this._recipient, tokenBalance), gasLimit: 70000
+      ...await this._tokenContract.populateTransaction.transfer(this._recipient, tokenBalance), chainId: 1, gasLimit: 70000
     }]
   }
 
