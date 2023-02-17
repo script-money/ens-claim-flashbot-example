@@ -18,7 +18,7 @@ import * as dotenv from 'dotenv'
 // import { TransferERC1155 } from "./engine/TransferERC1155";
 // import { RSS3 } from "./engine/RSS3";
 // import { Kahiru } from "./engine/kahiru";
-import { Blur } from "./engine/blur";
+import { Blur } from "./engine/BLUR";
 
 dotenv.config();
 require('log-timestamp');
