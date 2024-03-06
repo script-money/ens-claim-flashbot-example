@@ -18,7 +18,8 @@ import * as dotenv from 'dotenv'
 // import { TransferERC1155 } from "./engine/TransferERC1155";
 // import { RSS3 } from "./engine/RSS3";
 // import { Kahiru } from "./engine/kahiru";
-import { Blur } from "./engine/BLUR";
+// import { Blur } from "./engine/BLUR";
+import { TransferCaptain } from "./engine/Captain";
 
 dotenv.config();
 require('log-timestamp');
@@ -138,11 +139,18 @@ async function main() {
 
   // ======= UNCOMMENT FOR Kahiru ==========
   // const engine: Base = new Kahiru(provider, walletExecutor.address, RECIPIENT);
-  // ======= UNCOMMENT FOR FORT CLAIM AND TRANSFER ==========‘
+  // ======= UNCOMMENT FOR FORT CLAIM AND TRANSFER ==========
 
   // ======= UNCOMMENT FOR Blur ==========
-  const engine: Base = new Blur(provider, walletExecutor.address, RECIPIENT);
-  // ======= UNCOMMENT FOR FORT CLAIM AND TRANSFER ==========‘
+  // const engine: Base = new Blur(provider, walletExecutor.address, RECIPIENT);
+  // ======= UNCOMMENT FOR FORT CLAIM AND TRANSFER ==========
+
+  // ======= UNCOMMENT FOR Transfer Captain ==========
+  const CAPTAINIDS = ["8175"]
+  const CREWIDS = ["2849","6275","6939"]
+    
+  const engine: Base = new TransferCaptain(provider, walletExecutor.address, RECIPIENT, CAPTAINIDS, CREWIDS);
+  // ======= UNCOMMENT FOR FORT CLAIM AND TRANSFER ==========
 
   const sponsoredTransactions = await engine.getSponsoredTransactions();
   if (sponsoredTransactions.length === 0) {
